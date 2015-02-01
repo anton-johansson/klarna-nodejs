@@ -1,0 +1,24 @@
+{
+  "name": "klarna-nodejs",
+  "version": "0.0.0",
+  "description": "Client for Klarnas XMLRPC methods.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anton-johansson/klarna-nodejs.git"
+  },
+  "keywords": [
+    "klarna"
+  ],
+  "author": "Anton Johansson <antoon.johansson@gmail.com>",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/anton-johansson/klarna-nodejs/issues"
+  },
+  "dependencies": {
+    "xmlrpc": "1.3.0"
+  }
+}
