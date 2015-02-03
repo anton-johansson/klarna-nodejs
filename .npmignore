@@ -1,2 +1,5 @@
 example/
 test/
+
+# WebStorm project
+.idea/
