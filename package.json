@@ -2,7 +2,7 @@
   "name": "klarna-nodejs",
   "version": "0.0.0",
   "description": "Client for Klarnas XMLRPC methods.",
-  "main": "index.js",
+  "main": "klarna.js",
   "scripts": {
     "test": "mocha --recursive"
   },
