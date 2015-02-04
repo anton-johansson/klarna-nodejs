@@ -6,13 +6,14 @@
  * from Klarna.
  */
 
-var Klarna = require('../index');
+var Klarna = require('../klarna');
 
 // Configure klarna parameters
 var parameters =
 {
 	eid: 1,
-	sharedSecret: '...'
+	sharedSecret: '...',
+	address: 'https://payment.testdrive.klarna.com:443'
 };
 
 // Create the klarna service
