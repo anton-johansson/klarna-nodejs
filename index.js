@@ -11,14 +11,14 @@ Klarna.prototype.getAddresses = function(socialSecurityNumber, successCallback, 
 {
 	var client = xmlrpc.createClient('http://payment.testdrive.klarna.com:80');
 
-	var digestSecret = digest([ this.eid, socialSecurityNumber, this.sharedSecret ]);
-	var params = [ '4.1', 'nodejs:api:0.0.0', socialSecurityNumber, this.eid, digestSecret, 2, 5, '192.168.1.10' ];
+	var digestSecret = digest([this.eid, socialSecurityNumber, this.sharedSecret]);
+	var params = ['4.1', 'nodejs:api:0.0.0', socialSecurityNumber, this.eid, digestSecret, 2, 5, '192.168.1.10'];
 	client.methodCall('get_addresses', params, function(error, value)
 	{
 		if (value)
 		{
 			var addresses = [];
-			value.forEach(function (item)
+			value.forEach(function(item)
 			{
 				var address = {};
 				address.isCompany = (item.length == 5) ? true : false;
@@ -41,11 +41,18 @@ Klarna.prototype.getAddresses = function(socialSecurityNumber, successCallback, 
 				}
 				addresses.push(address);
 			});
+
 			successCallback(addresses);
 		}
 		else
 		{
-			errorCallback({ code: error.code, message: error.faultString });
+			var error =
+			{
+				code: error.code,
+				faultString: error.faultString
+			};
+
+			errorCallback(error);
 		}
 	});
 };

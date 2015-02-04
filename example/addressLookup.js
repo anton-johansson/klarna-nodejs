@@ -11,7 +11,7 @@ var Klarna = require('../index');
 // Configure klarna parameters
 var parameters =
 {
-	eid: ...,
+	eid: 1,
 	sharedSecret: '...'
 };
 
