@@ -10,7 +10,7 @@ You can pull them from the npm:
 
 ```json
 {
-  "dependencies" {
+  "dependencies": {
     "klarna-nodejs": "1.0.0
   }
 }
