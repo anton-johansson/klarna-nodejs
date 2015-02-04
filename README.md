@@ -11,7 +11,7 @@ You can pull them from the npm:
 ```json
 {
   "dependencies": {
-    "klarna-nodejs": "1.0.0
+    "klarna-nodejs": "1.0.0"
   }
 }
 ```
