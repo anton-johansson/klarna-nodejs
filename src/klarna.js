@@ -1,4 +1,4 @@
-var digest = require('./modules/digest');
+var digest = require('./digest');
 var xmlrpc = require('xmlrpc');
 
 // Constants
@@ -13,7 +13,7 @@ function Klarna(parameters)
 	this.address = parameters.address;
 
 	// Internal caller
-	this.xmlrpcCall = function(method, parameters, successCallback, errorCallback)
+	this.xmlrpcCall = function(method, parameters, success, failure)
 	{
 		// Create client
 		var client = this.createClient();
@@ -27,11 +27,11 @@ function Klarna(parameters)
 		{
 			if (value)
 			{
-				successCallback(value);
+				success(value);
 			}
 			else
 			{
-				errorCallback(error);
+				failure(error);
 			}
 		});
 	}
@@ -39,7 +39,6 @@ function Klarna(parameters)
 	// Creates the XMLRPC client
 	this.createClient = function()
 	{
-		console.log('test: ' + this.address);
 		if (this.address.indexOf('https') === 0)
 		{
 			return xmlrpc.createSecureClient(this.address);
@@ -52,13 +51,13 @@ function Klarna(parameters)
 };
 
 // Gets a list of addresses for persons or companies
-Klarna.prototype.getAddresses = function(socialSecurityNumber, successCallback, errorCallback)
+Klarna.prototype.getAddresses = function(number, success, failure)
 {
 	// Create digest
-	var digestSecret = digest([this.eid, socialSecurityNumber, this.sharedSecret]);
+	var digestSecret = digest([this.eid, number, this.sharedSecret]);
 
 	// Create list of parameters
-	var parameters = [socialSecurityNumber, this.eid, digestSecret, 2, 5, '192.168.1.10'];
+	var parameters = [number, this.eid, digestSecret, 2, 5, '192.168.1.10'];
 
 	// Make the XMLRPC call
 	this.xmlrpcCall('get_addresses', parameters, function(value)
@@ -88,7 +87,7 @@ Klarna.prototype.getAddresses = function(socialSecurityNumber, successCallback, 
 			addresses.push(address);
 		});
 
-		successCallback(addresses);
+		success(addresses);
 	}, function(error)
 	{
 		var error =
@@ -97,7 +96,7 @@ Klarna.prototype.getAddresses = function(socialSecurityNumber, successCallback, 
 			faultString: error.faultString
 		};
 
-		errorCallback(error);
+		failure(error);
 	});
 };
 

@@ -1,5 +1,5 @@
 var expect = require('expect');
-var digest = require('../../modules/digest');
+var digest = require('../src/digest');
 
 describe('digest.js', function ()
 {

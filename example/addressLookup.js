@@ -6,7 +6,7 @@
  * from Klarna.
  */
 
-var Klarna = require('../klarna');
+var Klarna = require('../src/klarna');
 
 // Configure klarna parameters
 var parameters =
