@@ -1,5 +1,6 @@
 example/
 test/
+src-cov/
 
 # WebStorm project
 .idea/

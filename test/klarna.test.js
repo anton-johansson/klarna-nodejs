@@ -12,7 +12,7 @@ var PARAMETERS =
 // Dependencies, etc
 var xmlrpc = {};
 var client = {}
-var Klarna = proxyquire('../src/klarna', { 'xmlrpc': xmlrpc });
+var Klarna = proxyquire('../src-cov/klarna', { 'xmlrpc': xmlrpc });
 var klarna = new Klarna(PARAMETERS);
 
 // Mocks
