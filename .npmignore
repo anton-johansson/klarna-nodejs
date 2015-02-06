@@ -1,6 +1,14 @@
 example/
 test/
-src-cov/
 
 # WebStorm project
 .idea/
+
+# Coverage reports
+src-cov/
+coverage
+coverage.html
+
+# Build related files
+Makefile
+.travis.yml
