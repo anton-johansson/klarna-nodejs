@@ -1,5 +1,5 @@
 var expect = require('expect');
-var digest = require('../src/digest');
+var digest = require('../src-cov/digest');
 
 describe('digest.js', function ()
 {

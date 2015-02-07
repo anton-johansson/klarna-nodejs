@@ -13,7 +13,12 @@ var PARAMETERS =
 var xmlrpc = {};
 var client = {}
 var Klarna = proxyquire('../src-cov/klarna', { 'xmlrpc': xmlrpc });
-var klarna = new Klarna(PARAMETERS);
+var klarna;
+
+before(function()
+{
+	klarna = new Klarna(PARAMETERS)
+});
 
 // Mocks
 xmlrpc.createSecureClient = function(address) { return client; };
@@ -43,7 +48,7 @@ client.methodCall = function(method, parameters, callback)
 				code: '9113',
 				faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
 			};
-			error(data, undefined);
+			callback(data, undefined);
 		}
 	}
 };
@@ -101,6 +106,59 @@ describe('klarna.js', function()
 						country: '209'
 					}
 				];
+
+				assert.deepEqual(expected, actual);
+				done();
+			}, function(error)
+			{
+				assert.fail('', '', 'Expected success, but got an error.');
+				done();
+			});
+		});
+
+		it('should return error properly if XMLRPC error occurs', function(done)
+		{
+			klarna.getAddresses('123', function()
+			{
+				assert.fail('', '', 'Expected failure, but got success.');
+				done();
+			}, function(actual)
+			{
+				var expected =
+				{
+					code: '9113',
+					faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
+				};
+
+				assert.deepEqual(expected, actual);
+				done();
+			});
+		});
+
+		it('should work properly using http in addition to https', function(done)
+		{
+			var parameters =
+			{
+				address: 'http://payment.testdrive.klarna.com:80',
+				eid: 123,
+				sharedSecret: 'secret'
+			};
+
+			klarna = new Klarna(parameters)
+			klarna.getAddresses('410321-9202', function(actual)
+			{
+				var expected =
+					[
+						{
+							isCompany: false,
+							firstName: 'Testperson-se',
+							lastName: 'Approved',
+							street: 'Stårgatan 1',
+							zipCode: '12345',
+							city: 'Ankeborg',
+							country: '209'
+						}
+					];
 
 				assert.deepEqual(expected, actual);
 				done();
