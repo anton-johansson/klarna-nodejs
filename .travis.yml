@@ -1,8 +1,9 @@
 language: node_js
 node_js:
-  - "0.11"
+  - "node"
+  - "iojs"
+  - "0.12"
   - "0.10"
 
-after_success:
-  - ./node_modules/.bin/jscoverage src src-cov
-  - ./node_modules/.bin/mocha test/**.test.js -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+script:
+  - npm run-script test-on-travis

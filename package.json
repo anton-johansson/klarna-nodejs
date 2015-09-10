@@ -4,7 +4,8 @@
   "description": "Client for Klarnas XMLRPC methods.",
   "main": "src/klarna.js",
   "scripts": {
-    "test": "make test"
+    "test": "./node_modules/.bin/istanbul cover --include-all-sources ./node_modules/.bin/_mocha test/**/*.test.js",
+    "test-on-travis": "./node_modules/.bin/istanbul cover --include-all-sources --report lcovonly ./node_modules/.bin/_mocha test/*.test.js && cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,10 @@
     "xmlrpc": "1.3.0"
   },
   "devDependencies": {
-    "coveralls": "2.11.2",
+    "codecov.io": "0.1.5",
+    "istanbul": "0.3.7",
     "expect": "1.6.0",
-    "mocha": "2.1.0",
-    "mocha-lcov-reporter": "0.0.1",
-    "proxyquire": "1.3.1",
-    "jscoverage": "0.5.9"
+    "mocha": "2.2.0",
+    "proxyquire": "1.3.1"
   }
 }

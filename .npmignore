@@ -1,14 +1,11 @@
 example/
 test/
 
-# WebStorm project
-.idea/
+# IDE-related files
+.c9/
 
-# Coverage reports
-src-cov/
-coverage
-coverage.html
+# Coverage related files
+coverage/
 
 # Build related files
-Makefile
 .travis.yml

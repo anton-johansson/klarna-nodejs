@@ -2,7 +2,7 @@ var proxyquire = require('proxyquire');
 var assert = require('assert');
 
 // Constants
-var PARAMETERS =
+const PARAMETERS =
 {
 	address: 'https://payment.testdrive.klarna.com:443',
 	eid: 123,
@@ -13,7 +13,7 @@ var PARAMETERS =
 // Dependencies, etc
 var xmlrpc = {};
 var client = {}
-var Klarna = proxyquire('../src-cov/klarna', { 'xmlrpc': xmlrpc });
+var Klarna = proxyquire('../lib/klarna', { 'xmlrpc': xmlrpc });
 var klarna;
 
 before(function()
