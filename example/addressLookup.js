@@ -13,10 +13,11 @@ var parameters =
 {
 	eid: 1,
 	sharedSecret: '...',
-	address: 'https://payment.testdrive.klarna.com:443'
+	address: 'https://payment.testdrive.klarna.com:443',
+	clientIP: '127.0.0.1'
 };
 
-// Create the klarna service
+// Create the Klarna service
 var klarna = new Klarna(parameters);
 
 // Get addresses of a person

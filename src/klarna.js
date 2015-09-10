@@ -2,17 +2,25 @@ var digest = require('./digest');
 var xmlrpc = require('xmlrpc');
 
 // Constants
-var PROTO = '4.1';
-var VERSION = 'nodejs:api:0.0.0';
+const PROTO = '4.1';
+const VERSION = 'nodejs:api:1.0.0';
 
-// Constructor
+/**
+ * Constructs a new Klarna service instance.
+ *
+ * @param parameters The parameters to initialize the instance with.
+ * @constructor
+ */
 function Klarna(parameters)
 {
 	this.eid = parameters.eid;
 	this.sharedSecret = parameters.sharedSecret;
 	this.address = parameters.address;
+	this.clientIP = parameters.clientIP;
 
-	// Internal caller
+	/**
+	 * Internal caller.
+	 */
 	this.xmlrpcCall = function(method, parameters, success, failure)
 	{
 		// Create client
@@ -36,7 +44,9 @@ function Klarna(parameters)
 		});
 	}
 
-	// Creates the XMLRPC client
+	/**
+	 * Creates the XMLRPC client.
+	 */
 	this.createClient = function()
 	{
 		if (this.address.indexOf('https') === 0)
@@ -50,14 +60,18 @@ function Klarna(parameters)
 	}
 };
 
-// Gets a list of addresses for persons or companies
+/**
+ * Gets a list of addresses for persons or companies.
+ *
+ * @param number The social security number or organization number to look up addresses for.
+ */
 Klarna.prototype.getAddresses = function(number, success, failure)
 {
 	// Create digest
 	var digestSecret = digest([this.eid, number, this.sharedSecret]);
 
 	// Create list of parameters
-	var parameters = [number, this.eid, digestSecret, 2, 5, '192.168.1.10'];
+	var parameters = [number, this.eid, digestSecret, 2, 5, this.clientIP];
 
 	// Make the XMLRPC call
 	this.xmlrpcCall('get_addresses', parameters, function(value)
@@ -90,13 +104,13 @@ Klarna.prototype.getAddresses = function(number, success, failure)
 		success(addresses);
 	}, function(error)
 	{
-		var error =
+		var data =
 		{
 			code: error.code,
 			faultString: error.faultString
 		};
 
-		failure(error);
+		failure(data);
 	});
 };
 

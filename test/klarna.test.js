@@ -6,7 +6,8 @@ var PARAMETERS =
 {
 	address: 'https://payment.testdrive.klarna.com:443',
 	eid: 123,
-	sharedSecret: 'secret'
+	sharedSecret: 'secret',
+	clientIP: '127.0.0.1'
 };
 
 // Dependencies, etc
@@ -27,12 +28,12 @@ client.methodCall = function(method, parameters, callback)
 {
 	if (method === 'get_addresses')
 	{
-		if (parameters[2] === '410321-9202')
+		if (parameters[2] === '410321-9202' && parameters[7] === '127.0.0.1')
 		{
 			var data = [['Testperson-se', 'Approved', 'Stårgatan 1', '12345', 'Ankeborg', '209']];
 			callback(undefined, data);
 		}
-		else if (parameters[2] === '002031-0132')
+		else if (parameters[2] === '002031-0132' && parameters[7] === '127.0.0.1')
 		{
 			var data =
 			[
@@ -141,10 +142,11 @@ describe('klarna.js', function()
 			{
 				address: 'http://payment.testdrive.klarna.com:80',
 				eid: 123,
-				sharedSecret: 'secret'
+				sharedSecret: 'secret',
+				clientIP: '127.0.0.1'
 			};
 
-			klarna = new Klarna(parameters)
+			klarna = new Klarna(parameters);
 			klarna.getAddresses('410321-9202', function(actual)
 			{
 				var expected =
