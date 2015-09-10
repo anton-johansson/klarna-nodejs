@@ -34,19 +34,18 @@ Gets the addresses for given social security number or organization number.
 
 #### number
 
-Type: `string`
-
-The social security or organization number.
+> Type: `string`
+>
+> The social security or organization number.
 
 #### callback(error, addresses)
 
-Type: `function`
-
-##### addresses
-
-Type: `array`
-
-The found addresses.
+> Type: `function`
+>
+> ##### addresses
+> Type: `array`
+>
+> The found addresses.
 
 
 ## Examples
