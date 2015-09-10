@@ -49,19 +49,25 @@ client.methodCall = function(method, parameters, callback)
 				code: '9113',
 				faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
 			};
-			callback(data, undefined);
+			callback(data);
 		}
 	}
 };
 
 describe('klarna.js', function()
 {
-	describe('#getAddresses(number, success, failure)', function ()
+	describe('#getAddresses(number, callback)', function ()
 	{
 		it('should return addresses for a person properly', function(done)
 		{
-			klarna.getAddresses('410321-9202', function(actual)
+			klarna.getAddresses('410321-9202', function(error, addresses)
 			{
+				if (error)
+				{
+					assert.fail('', '', 'Expected success, but got an error.');
+					done();
+				}
+
 				var expected =
 				[
 					{
@@ -75,19 +81,21 @@ describe('klarna.js', function()
 					}
 				];
 
-				assert.deepEqual(expected, actual);
-				done();
-			}, function(error)
-			{
-				assert.fail('', '', 'Expected success, but got an error.');
+				assert.deepEqual(expected, addresses);
 				done();
 			});
 		});
 
 		it('should return addresses for a company properly', function(done)
 		{
-			klarna.getAddresses('002031-0132', function(actual)
+			klarna.getAddresses('002031-0132', function(error, addresses)
 			{
+				if (error)
+				{
+					assert.fail('', '', 'Expected success, but got an error.');
+					done();
+				}
+
 				var expected =
 				[
 					{
@@ -108,30 +116,28 @@ describe('klarna.js', function()
 					}
 				];
 
-				assert.deepEqual(expected, actual);
-				done();
-			}, function(error)
-			{
-				assert.fail('', '', 'Expected success, but got an error.');
+				assert.deepEqual(expected, addresses);
 				done();
 			});
 		});
 
 		it('should return error properly if XMLRPC error occurs', function(done)
 		{
-			klarna.getAddresses('123', function()
+			klarna.getAddresses('123', function(error, addresses)
 			{
-				assert.fail('', '', 'Expected failure, but got success.');
-				done();
-			}, function(actual)
-			{
+				if (addresses)
+				{
+					assert.fail('', '', 'Expected failure, but got success.');
+					done();
+				}
+
 				var expected =
 				{
 					code: '9113',
 					faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
 				};
 
-				assert.deepEqual(expected, actual);
+				assert.deepEqual(expected, error);
 				done();
 			});
 		});
@@ -147,26 +153,28 @@ describe('klarna.js', function()
 			};
 
 			klarna = new Klarna(parameters);
-			klarna.getAddresses('410321-9202', function(actual)
+			klarna.getAddresses('410321-9202', function(error, addresses)
 			{
-				var expected =
-					[
-						{
-							isCompany: false,
-							firstName: 'Testperson-se',
-							lastName: 'Approved',
-							street: 'Stårgatan 1',
-							zipCode: '12345',
-							city: 'Ankeborg',
-							country: '209'
-						}
-					];
+				if (error)
+				{
+					assert.fail('', '', 'Expected success, but got an error.');
+					done();
+				}
 
-				assert.deepEqual(expected, actual);
-				done();
-			}, function(error)
-			{
-				assert.fail('', '', 'Expected success, but got an error.');
+				var expected =
+				[
+					{
+						isCompany: false,
+						firstName: 'Testperson-se',
+						lastName: 'Approved',
+						street: 'Stårgatan 1',
+						zipCode: '12345',
+						city: 'Ankeborg',
+						country: '209'
+					}
+				];
+
+				assert.deepEqual(expected, addresses);
 				done();
 			});
 		});

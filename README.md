@@ -26,6 +26,11 @@ var klarna = new Klarna(configuration);
 ```
 
 
+## Examples
+
+See examples [here](examples/).
+
+
 ## API
 
 ### .getAddresses(number, callback)
@@ -48,11 +53,6 @@ Gets the addresses for given social security number or organization number.
 > The found addresses.
 
 
-## Examples
-
-See examples [here](examples/).
-
-
 ## License
 
-Apache License © [Anton Johansson](http://github.com/anton-johansson)
+Apache License © [Anton Johansson](https://github.com/anton-johansson)

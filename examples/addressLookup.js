@@ -6,7 +6,7 @@
  * from Klarna.
  */
 
-var Klarna = require('../src/klarna');
+var Klarna = require('../lib/klarna');
 
 // Configure klarna parameters
 var parameters =
@@ -22,22 +22,14 @@ var klarna = new Klarna(parameters);
 
 // Get addresses of a person
 console.log('Get addresses of a person');
-klarna.getAddresses('410321-9202', function(value)
+klarna.getAddresses('410321-9202', function(error, addresses)
 {
-	console.log(value);
-},
-function(error)
-{
-	console.log(error);
+	console.log(error || addresses);
 });
 
 // Get addresses of a company
 console.log('Get addresses of a company');
-klarna.getAddresses('002031-0132', function(value)
+klarna.getAddresses('002031-0132', function(error, addresses)
 {
-	console.log(value);
-},
-function(error)
-{
-	console.log(error);
+	console.log(error || addresses);
 });
