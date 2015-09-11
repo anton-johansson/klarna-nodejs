@@ -1,5 +1,6 @@
 var proxyquire = require('proxyquire');
 var assert = require('assert');
+var expect = require('expect');
 
 // Constants
 const PARAMETERS =
@@ -56,6 +57,15 @@ client.methodCall = function(method, parameters, callback)
 
 describe('klarna.js', function()
 {
+	describe('constructor', function()
+	{
+		it('should throw an error if eid is invalid', function()
+		{
+			expect(function() { new Klarna({ eid: -1 }) }).toThrow(/'eid' must be a positive number/);
+			expect(function() { new Klarna({ eid: 1 }) }).toNotThrow();
+		});
+	});
+
 	describe('#getAddresses(number, callback)', function ()
 	{
 		it('should return addresses for a person properly', function(done)

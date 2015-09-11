@@ -15,9 +15,9 @@ describe('digest.js', function ()
 
 		it('should throw error if arguments is not an array', function (done)
 		{
-			expect(function () { digest(undefined)		}).toThrow("'arguments' must be an array");
-			expect(function () { digest('hej')			}).toThrow("'arguments' must be an array");
-			expect(function () { digest(123)			}).toThrow("'arguments' must be an array");
+			expect(function () { digest(undefined)		}).toThrow(/'arguments' must be an array/);
+			expect(function () { digest('hej')			}).toThrow(/'arguments' must be an array/);
+			expect(function () { digest(123)			}).toThrow(/'arguments' must be an array/);
 			expect(function () { digest([])				}).toNotThrow();
 			done();
 		});
