@@ -61,8 +61,14 @@ describe('klarna.js', function()
 	{
 		it('should throw an error if eid is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: -1 }) }).toThrow(/'eid' must be a positive number/);
-			expect(function() { new Klarna({ eid: 1 }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: -1, address: 'https://payment.klarna.com:443' }) }).toThrow(/'eid' must be a positive number/);
+			expect(function() { new Klarna({ eid: 1, address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+		});
+
+		it('should throw an error if the address is invalid', function()
+		{
+			expect(function() { new Klarna({ eid: 1, address: 'abc123' }) }).toThrow(/'address' must be a proper URL/);
+			expect(function() { new Klarna({ eid: 1, address: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 	});
 

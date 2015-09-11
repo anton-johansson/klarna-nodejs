@@ -17,4 +17,19 @@ describe('validate.js', function ()
 			done();
 		});
 	});
+
+	describe('#address(address)', function ()
+	{
+		it('should only consider IP-addresses as OK', function (done)
+		{
+			expect(validate.address('http://testdrive.payment.klarna.com:80')).toEqual(true);
+			expect(validate.address('https://payment.klarna.com:443')).toEqual(true);
+			expect(validate.address('http://www.google.se')).toEqual(true);
+			expect(validate.address('payment.klarna.com')).toEqual(false);
+			expect(validate.address('')).toEqual(false);
+			expect(validate.address(123)).toEqual(false);
+			expect(validate.address([])).toEqual(false);
+			done();
+		});
+	});
 });
