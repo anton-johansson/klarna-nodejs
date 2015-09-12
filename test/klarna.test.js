@@ -1,9 +1,11 @@
+"use strict";
+
 var proxyquire = require('proxyquire');
 var assert = require('assert');
 var expect = require('expect');
 
 // Constants
-const PARAMETERS =
+var PARAMETERS =
 {
 	address: 'https://payment.testdrive.klarna.com:443',
 	eid: 123,

@@ -1,3 +1,5 @@
+"use strict";
+
 var expect = require('expect');
 var validate = require('../lib/validate');
 

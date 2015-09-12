@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * The purpose of this example is to demonstrate how a simple address lookup
  * against Klarnas API is performed.

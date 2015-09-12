@@ -1,9 +1,11 @@
+"use strict";
+
 var expect = require('expect');
 var digest = require('../lib/digest');
 
 describe('digest.js', function ()
 {
-	describe('#digest(arguments)', function ()
+	describe('#digest(parameters)', function ()
 	{
 		it('should return proper digested string', function()
 		{
@@ -12,11 +14,11 @@ describe('digest.js', function ()
 			expect(digest([]))											.toEqual('47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=');
 		});
 
-		it('should throw error if arguments is not an array', function()
+		it('should throw error if parameters is not an array', function()
 		{
-			expect(function () { digest(undefined) })	.toThrow(/'arguments' must be an array/);
-			expect(function () { digest('hej') })		.toThrow(/'arguments' must be an array/);
-			expect(function () { digest(123) })			.toThrow(/'arguments' must be an array/);
+			expect(function () { digest(undefined) })	.toThrow(/'parameters' must be an array/);
+			expect(function () { digest('hej') })		.toThrow(/'parameters' must be an array/);
+			expect(function () { digest(123) })			.toThrow(/'parameters' must be an array/);
 			expect(function () { digest([]) })			.toNotThrow();
 		});
 	});
