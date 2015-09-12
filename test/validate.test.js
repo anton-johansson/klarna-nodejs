@@ -30,7 +30,7 @@ describe('validate.js', function ()
 
 	describe('#address(address)', function ()
 	{
-		it('should only consider IP-addresses as OK', function()
+		it('should only consider proper URLs as OK', function()
 		{
 			expect(validate.address('http://testdrive.payment.klarna.com:80')).toEqual(true);
 			expect(validate.address('https://payment.klarna.com:443')).toEqual(true);
@@ -39,6 +39,21 @@ describe('validate.js', function ()
 			expect(validate.address('')).toEqual(false);
 			expect(validate.address(123)).toEqual(false);
 			expect(validate.address([])).toEqual(false);
+		});
+	});
+
+	describe('#clientIP(clientIP)', function ()
+	{
+		it('should only consider IP-addresses as OK', function()
+		{
+			expect(validate.clientIP('8.8.8.8')).toEqual(true);
+			expect(validate.clientIP('127.0.0.1')).toEqual(true);
+			expect(validate.clientIP('3ffe:1900:4545:3:200:f8ff:fe21:67cf')).toEqual(true);
+			expect(validate.clientIP('1.2.3')).toEqual(false);
+			expect(validate.clientIP('')).toEqual(false);
+			expect(validate.clientIP(123)).toEqual(false);
+			expect(validate.clientIP([])).toEqual(false);
+			expect(validate.clientIP({})).toEqual(false);
 		});
 	});
 });

@@ -80,6 +80,20 @@ describe('klarna.js', function()
 
 	describe('#getAddresses(number, callback)', function ()
 	{
+		it('should throw error if clientIP is invalid', function()
+		{
+			var parameters =
+			{
+				address: 'http://payment.testdrive.klarna.com:80',
+				eid: 123,
+				sharedSecret: 'secret',
+				clientIP: 'invalid-address'
+			};
+
+			var klarna = new Klarna(parameters);
+			expect(function() { klarna.getAddresses('410321-9202', function(){}); }).toThrow(/'clientIP' is not a valid IP-address/);
+		});
+
 		it('should return addresses for a person properly', function(done)
 		{
 			klarna.getAddresses('410321-9202', function(error, addresses)
