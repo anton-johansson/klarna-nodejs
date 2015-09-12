@@ -94,6 +94,11 @@ describe('klarna.js', function()
 			expect(function() { klarna.getAddresses('410321-9202', function(){}); }).toThrow(/'clientIP' is not a valid IP-address/);
 		});
 
+		it('should throw error if the number is invalid', function()
+		{
+			expect(function() { klarna.getAddresses('', function(){}); }).toThrow(/'number' is not valid/);
+		});
+
 		it('should return addresses for a person properly', function(done)
 		{
 			klarna.getAddresses('410321-9202', function(error, addresses)

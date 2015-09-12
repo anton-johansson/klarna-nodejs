@@ -56,4 +56,15 @@ describe('validate.js', function ()
 			expect(validate.clientIP({})).toEqual(false);
 		});
 	});
+
+	describe('#number(number)', function ()
+	{
+		it('should consider non-empty strings as OK', function()
+		{
+			expect(validate.number('')).toEqual(false);
+			expect(validate.number(undefined)).toEqual(false);
+			expect(validate.number([])).toEqual(false);
+			expect(validate.number('abc123')).toEqual(true);
+		});
+	});
 });
