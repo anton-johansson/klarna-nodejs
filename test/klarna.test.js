@@ -15,13 +15,13 @@ var PARAMETERS =
 
 // Dependencies, etc
 var xmlrpc = {};
-var client = {}
+var client = {};
 var Klarna = proxyquire('../lib/klarna', { 'xmlrpc': xmlrpc });
 var klarna;
 
 before(function()
 {
-	klarna = new Klarna(PARAMETERS)
+	klarna = new Klarna(PARAMETERS);
 });
 
 // Mocks
@@ -93,12 +93,12 @@ describe('klarna.js', function()
 			};
 
 			var klarna = new Klarna(parameters);
-			expect(function() { klarna.getAddresses('410321-9202', function(){}); }).toThrow(/'clientIP' is not a valid IP-address/);
+			expect(klarna.getAddresses).withContext(klarna).withArgs('410321-9202', function(){}).toThrow(/'clientIP' is not a valid IP-address/);
 		});
 
 		it('should throw error if the number is invalid', function()
 		{
-			expect(function() { klarna.getAddresses('', function(){}); }).toThrow(/'number' is not valid/);
+			expect(klarna.getAddresses).withContext(klarna).withArgs('', function(){}).toThrow(/'number' is not valid/);
 		});
 
 		it('should return addresses for a person properly', function(done)
