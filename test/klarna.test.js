@@ -78,6 +78,13 @@ describe('klarna.js', function()
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'abc123' }) }).toThrow(/'address' must be a proper URL/);
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
+
+		it('should throw an error if country is invalid', function()
+		{
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443', country: 999 }) }).toThrow(/Invalid country/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443', country: 209 }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+		});
 	});
 
 	describe('#getAddresses(number, callback)', function ()
