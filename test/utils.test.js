@@ -68,4 +68,27 @@ describe('utils.js', function ()
 			expect(utils.currencyByCountry).toThrow(/Invalid country/);
 		});
 	});
+
+	describe('#languageByCountry(country)', function()
+	{
+		it('should return correct language', function()
+		{
+			expect(utils.languageByCountry( 15)).toEqual( 28);
+			expect(utils.languageByCountry( 59)).toEqual( 27);
+			expect(utils.languageByCountry( 73)).toEqual( 37);
+			expect(utils.languageByCountry( 81)).toEqual( 28);
+			expect(utils.languageByCountry(154)).toEqual(101);
+			expect(utils.languageByCountry(164)).toEqual( 97);
+			expect(utils.languageByCountry(209)).toEqual(138);
+		});
+
+		it('should throw an error if an invalid country is passed in', function()
+		{
+			expect(utils.languageByCountry).withArgs(999).toThrow(/Invalid country/);
+			expect(utils.languageByCountry).withArgs('hello world').toThrow(/Invalid country/);
+			expect(utils.languageByCountry).withArgs([]).toThrow(/Invalid country/);
+			expect(utils.languageByCountry).withArgs({}).toThrow(/Invalid country/);
+			expect(utils.languageByCountry).toThrow(/Invalid country/);
+		});
+	});
 });
