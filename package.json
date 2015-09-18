@@ -12,7 +12,8 @@
     "url": "https://github.com/anton-johansson/klarna-nodejs.git"
   },
   "keywords": [
-    "klarna"
+    "klarna",
+    "payment"
   ],
   "author": "Anton Johansson <antoon.johansson@gmail.com>",
   "license": "Apache 2.0",
