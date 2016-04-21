@@ -69,4 +69,19 @@ describe('validate.js', function ()
 			expect(validate.pno('abc123')).toEqual(true);
 		});
 	});
+
+	describe('#rno(rno)', function ()
+	{
+		it('should consider positive numbers as OK', function()
+		{
+			expect(validate.rno(1)).toEqual(true);
+			expect(validate.rno(123)).toEqual(true);
+			expect(validate.rno(999999999)).toEqual(true);
+			expect(validate.rno(0)).toEqual(false);
+			expect(validate.rno(-1)).toEqual(false);
+			expect(validate.rno('hello world')).toEqual(false);
+			expect(validate.rno('12345')).toEqual(true);
+		});
+	});
+
 });
