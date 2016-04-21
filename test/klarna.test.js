@@ -9,8 +9,7 @@ var PARAMETERS =
 {
 	url: 'https://payment.testdrive.klarna.com:443',
 	eid: 123,
-	sharedSecret: 'secret',
-	clientIP: '127.0.0.1'
+	sharedSecret: 'secret'
 };
 
 // Dependencies, etc
@@ -73,21 +72,15 @@ describe('klarna.js', function()
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 
-		it('should throw an error if the address is invalid', function()
+		it('should throw an error if the url is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'abc123' }) }).toThrow(/'address' must be a proper URL/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'abc123' }) }).toThrow(/'url' must be a proper URL/);
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 
-		it('should throw an error if country is invalid', function()
-		{
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443', country: 999 }) }).toThrow(/Invalid country/);
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443', country: 209 }) }).toNotThrow();
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
-		});
 	});
 
-	describe('#getAddresses(number, callback)', function ()
+	describe('#getAddresses(clientIP, number, callback)', function ()
 	{
 		it('should throw error if clientIP is invalid', function()
 		{
@@ -95,22 +88,21 @@ describe('klarna.js', function()
 			{
 				url: 'http://payment.testdrive.klarna.com:80',
 				eid: 123,
-				sharedSecret: 'secret',
-				clientIP: 'invalid-address'
+				sharedSecret: 'secret'
 			};
 
 			var klarna = new Klarna(parameters);
-			expect(klarna.getAddresses).withContext(klarna).withArgs('410321-9202', function(){}).toThrow(/'clientIP' is not a valid IP-address/);
+			expect(klarna.getAddresses).withContext(klarna).withArgs('invalid-IP', 'SE', '410321-9202', function(){}).toThrow(/'clientIP' is not a valid IP-address/);
 		});
 
 		it('should throw error if the pno is invalid', function()
 		{
-			expect(klarna.getAddresses).withContext(klarna).withArgs('', function(){}).toThrow(/'pno' is not valid/);
+			expect(klarna.getAddresses).withContext(klarna).withArgs('127.0.0.1', 'SE', '', function(){}).toThrow(/'pno' is not valid/);
 		});
 
 		it('should return addresses for a person properly', function(done)
 		{
-			klarna.getAddresses('410321-9202', function(error, addresses)
+			klarna.getAddresses('127.0.0.1', 'SE', '410321-9202', function(error, addresses)
 			{
 				if (error)
 				{
@@ -138,7 +130,7 @@ describe('klarna.js', function()
 
 		it('should return addresses for a company properly', function(done)
 		{
-			klarna.getAddresses('002031-0132', function(error, addresses)
+			klarna.getAddresses('127.0.0.1', 'SE', '002031-0132', function(error, addresses)
 			{
 				if (error)
 				{
@@ -173,7 +165,7 @@ describe('klarna.js', function()
 
 		it('should return error properly if XMLRPC error occurs', function(done)
 		{
-			klarna.getAddresses('123', function(error, addresses)
+			klarna.getAddresses('127.0.0.1', 'SE', '123', function(error, addresses)
 			{
 				if (addresses)
 				{
@@ -198,12 +190,11 @@ describe('klarna.js', function()
 			{
 				url: 'http://payment.testdrive.klarna.com:80',
 				eid: 123,
-				sharedSecret: 'secret',
-				clientIP: '127.0.0.1'
+				sharedSecret: 'secret'
 			};
 
 			klarna = new Klarna(parameters);
-			klarna.getAddresses('410321-9202', function(error, addresses)
+			klarna.getAddresses('127.0.0.1', 'SE', '410321-9202', function(error, addresses)
 			{
 				if (error)
 				{
