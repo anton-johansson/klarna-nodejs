@@ -7,7 +7,7 @@ var expect = require('expect');
 // Constants
 var PARAMETERS =
 {
-	address: 'https://payment.testdrive.klarna.com:443',
+	url: 'https://payment.testdrive.klarna.com:443',
 	eid: 123,
 	sharedSecret: 'secret',
 	clientIP: '127.0.0.1'
@@ -25,8 +25,8 @@ before(function()
 });
 
 // Mocks
-xmlrpc.createSecureClient = function(address) { return client; };
-xmlrpc.createClient = function(address) { return client; };
+xmlrpc.createSecureClient = function(url) { return client; };
+xmlrpc.createClient = function(url) { return client; };
 client.methodCall = function(method, parameters, callback)
 {
 	if (method === 'get_addresses')
@@ -63,27 +63,27 @@ describe('klarna.js', function()
 	{
 		it('should throw an error if eid is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: -1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toThrow(/'eid' must be a positive number/);
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: -1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toThrow(/'eid' must be a positive number/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 
 		it('should throw an error if the shared secret is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: 1, sharedSecret: '', address: 'https://payment.klarna.com:443' }) }).toThrow(/'sharedSecret' must be a non-empty string/);
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: 1, sharedSecret: '', url: 'https://payment.klarna.com:443' }) }).toThrow(/'sharedSecret' must be a non-empty string/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 
 		it('should throw an error if the address is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'abc123' }) }).toThrow(/'address' must be a proper URL/);
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'abc123' }) }).toThrow(/'address' must be a proper URL/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 
 		it('should throw an error if country is invalid', function()
 		{
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443', country: 999 }) }).toThrow(/Invalid country/);
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443', country: 209 }) }).toNotThrow();
-			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', address: 'https://payment.klarna.com:443' }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443', country: 999 }) }).toThrow(/Invalid country/);
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443', country: 209 }) }).toNotThrow();
+			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
 		});
 	});
 
@@ -93,7 +93,7 @@ describe('klarna.js', function()
 		{
 			var parameters =
 			{
-				address: 'http://payment.testdrive.klarna.com:80',
+				url: 'http://payment.testdrive.klarna.com:80',
 				eid: 123,
 				sharedSecret: 'secret',
 				clientIP: 'invalid-address'
@@ -196,7 +196,7 @@ describe('klarna.js', function()
 		{
 			var parameters =
 			{
-				address: 'http://payment.testdrive.klarna.com:80',
+				url: 'http://payment.testdrive.klarna.com:80',
 				eid: 123,
 				sharedSecret: 'secret',
 				clientIP: '127.0.0.1'

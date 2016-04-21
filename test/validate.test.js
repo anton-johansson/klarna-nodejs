@@ -30,17 +30,17 @@ describe('validate.js', function ()
 		});
 	});
 
-	describe('#address(address)', function ()
+	describe('#url(url)', function ()
 	{
 		it('should only consider proper URLs as OK', function()
 		{
-			expect(validate.address('http://testdrive.payment.klarna.com:80')).toEqual(true);
-			expect(validate.address('https://payment.klarna.com:443')).toEqual(true);
-			expect(validate.address('http://www.google.se')).toEqual(true);
-			expect(validate.address('payment.klarna.com')).toEqual(false);
-			expect(validate.address('')).toEqual(false);
-			expect(validate.address(123)).toEqual(false);
-			expect(validate.address([])).toEqual(false);
+			expect(validate.url('http://testdrive.payment.klarna.com:80')).toEqual(true);
+			expect(validate.url('https://payment.klarna.com:443')).toEqual(true);
+			expect(validate.url('http://www.google.se')).toEqual(true);
+			expect(validate.url('payment.klarna.com')).toEqual(false);
+			expect(validate.url('')).toEqual(false);
+			expect(validate.url(123)).toEqual(false);
+			expect(validate.url([])).toEqual(false);
 		});
 	});
 
