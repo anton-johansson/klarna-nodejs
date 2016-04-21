@@ -59,14 +59,14 @@ describe('validate.js', function ()
 		});
 	});
 
-	describe('#number(number)', function ()
+	describe('#pno(pno)', function ()
 	{
 		it('should consider non-empty strings as OK', function()
 		{
-			expect(validate.number('')).toEqual(false);
-			expect(validate.number(undefined)).toEqual(false);
-			expect(validate.number([])).toEqual(false);
-			expect(validate.number('abc123')).toEqual(true);
+			expect(validate.pno('')).toEqual(false);
+			expect(validate.pno(undefined)).toEqual(false);
+			expect(validate.pno([])).toEqual(false);
+			expect(validate.pno('abc123')).toEqual(true);
 		});
 	});
 });

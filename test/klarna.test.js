@@ -103,9 +103,9 @@ describe('klarna.js', function()
 			expect(klarna.getAddresses).withContext(klarna).withArgs('410321-9202', function(){}).toThrow(/'clientIP' is not a valid IP-address/);
 		});
 
-		it('should throw error if the number is invalid', function()
+		it('should throw error if the pno is invalid', function()
 		{
-			expect(klarna.getAddresses).withContext(klarna).withArgs('', function(){}).toThrow(/'number' is not valid/);
+			expect(klarna.getAddresses).withContext(klarna).withArgs('', function(){}).toThrow(/'pno' is not valid/);
 		});
 
 		it('should return addresses for a person properly', function(done)
