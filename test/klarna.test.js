@@ -54,6 +54,32 @@ client.methodCall = function(method, parameters, callback)
 			callback(data);
 		}
 	}
+	else if (method === 'cancel_reservation')
+	{
+		if (parameters[2] === '123') {
+			var data = 'OK';
+			callback(undefined, data);
+		}
+		else if (parameters[2] === '666') {
+		{
+			var data =
+			{
+				code: '9109',
+				faultString: 'We were not able to find the reservation you are trying to use. Please make sure you are using a correct reservation number and try again.' };
+			};
+			callback(data, undefined);
+		}
+		else
+		{
+			var data =
+			{
+				code: '9113',
+				faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
+			};
+			callback(data, undefined);
+		}
+
+	}
 };
 
 describe('klarna.js', function()
@@ -76,6 +102,82 @@ describe('klarna.js', function()
 		{
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'abc123' }) }).toThrow(/'url' must be a proper URL/);
 			expect(function() { new Klarna({ eid: 1, sharedSecret: 'abc123', url: 'https://payment.klarna.com:443' }) }).toNotThrow();
+		});
+
+	});
+
+	describe('#cancelReservation(rno, callback)', function ()
+	{
+		it('should throw error if rno is invalid', function()
+		{
+			var parameters =
+			{
+				url: 'http://payment.testdrive.klarna.com:80',
+				eid: 123,
+				sharedSecret: 'secret'
+			};
+
+			var klarna = new Klarna(parameters);
+			expect(klarna.cancelReservation).withContext(klarna).withArgs('invalid-rno', function(){}).toThrow(/'rno' is not a valid reservation number/);
+		});
+
+		it('should return error properly if XMLRPC error occurs', function(done)
+		{
+			klarna.cancelReservation('888', function(error, result)
+			{
+				if (result)
+				{
+					assert.fail('', '', 'Expected failure, but got success.');
+					done();
+				}
+
+				var expected =
+				{
+					code: '9113',
+					faultString: 'Det har uppstått ett integrationsfel mellan butiken och Klarna. Kontakta Webbutiken för mer information eller välj ett annat sätt att betala.'
+				};
+
+				assert.deepEqual(expected, error);
+				done();
+			});
+		});
+
+		it('should return OK if the call succeeds', function(done)
+		{
+			klarna.cancelReservation('123', function(error, result)
+			{
+				if (error)
+				{
+					assert.fail('', '', 'Expected success, but got failure.');
+					done();
+				}
+
+				var expected = 'OK'
+
+				assert(result == expected);
+				done();
+			});
+		});
+
+		it('should handle "not found" error properly', function(done)
+		{
+			klarna.cancelReservation('666', function(error, result)
+			{
+				if (result)
+				{
+					assert.fail('', '', 'Expected failure, but got success.');
+					done();
+				}
+
+				var expected =
+				{
+					code: '9109',
+					faultString: 'We were not able to find the reservation you are trying to use. Please make sure you are using a correct reservation number and try again.'
+				};
+
+				assert.deepEqual(expected, error);
+				done();
+			});
 		});
 
 	});
