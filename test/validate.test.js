@@ -30,17 +30,17 @@ describe('validate.js', function ()
 		});
 	});
 
-	describe('#address(address)', function ()
+	describe('#url(url)', function ()
 	{
 		it('should only consider proper URLs as OK', function()
 		{
-			expect(validate.address('http://testdrive.payment.klarna.com:80')).toEqual(true);
-			expect(validate.address('https://payment.klarna.com:443')).toEqual(true);
-			expect(validate.address('http://www.google.se')).toEqual(true);
-			expect(validate.address('payment.klarna.com')).toEqual(false);
-			expect(validate.address('')).toEqual(false);
-			expect(validate.address(123)).toEqual(false);
-			expect(validate.address([])).toEqual(false);
+			expect(validate.url('http://testdrive.payment.klarna.com:80')).toEqual(true);
+			expect(validate.url('https://payment.klarna.com:443')).toEqual(true);
+			expect(validate.url('http://www.google.se')).toEqual(true);
+			expect(validate.url('payment.klarna.com')).toEqual(false);
+			expect(validate.url('')).toEqual(false);
+			expect(validate.url(123)).toEqual(false);
+			expect(validate.url([])).toEqual(false);
 		});
 	});
 
@@ -59,14 +59,29 @@ describe('validate.js', function ()
 		});
 	});
 
-	describe('#number(number)', function ()
+	describe('#pno(pno)', function ()
 	{
 		it('should consider non-empty strings as OK', function()
 		{
-			expect(validate.number('')).toEqual(false);
-			expect(validate.number(undefined)).toEqual(false);
-			expect(validate.number([])).toEqual(false);
-			expect(validate.number('abc123')).toEqual(true);
+			expect(validate.pno('')).toEqual(false);
+			expect(validate.pno(undefined)).toEqual(false);
+			expect(validate.pno([])).toEqual(false);
+			expect(validate.pno('abc123')).toEqual(true);
 		});
 	});
+
+	describe('#rno(rno)', function ()
+	{
+		it('should consider positive numbers as OK', function()
+		{
+			expect(validate.rno(1)).toEqual(true);
+			expect(validate.rno(123)).toEqual(true);
+			expect(validate.rno(999999999)).toEqual(true);
+			expect(validate.rno(0)).toEqual(false);
+			expect(validate.rno(-1)).toEqual(false);
+			expect(validate.rno('hello world')).toEqual(false);
+			expect(validate.rno('12345')).toEqual(true);
+		});
+	});
+
 });

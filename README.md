@@ -17,12 +17,15 @@ var Klarna = require('klarna-nodejs');
 
 var configuration =
 {
-	eid: 1,
-	sharedSecret: '...',
-	address: 'https://payment.testdrive.klarna.com:443'
+    eid: 1,
+    sharedSecret: '...',
+    url: 'https://payment.testdrive.klarna.com:443'
 };
 
 var klarna = new Klarna(configuration);
+
+var result = klarna.getAddresses('127.0.0.1', 'SE', '1234567');
+
 ```
 
 
@@ -33,9 +36,21 @@ See examples [here](examples/).
 
 ## API
 
-### .getAddresses(number, callback)
+### .getAddresses(clientIP, country, number, callback)
 
 Gets the addresses for given social security number or organization number.
+
+#### clientIP
+
+> Type: `string`
+>
+> The IP address of the client on behalf of which we are making this call.
+
+#### country
+
+> Type: `string`
+>
+> The country to perform the check against (ex. 'SE' for Sweden).
 
 #### number
 
@@ -51,6 +66,26 @@ Gets the addresses for given social security number or organization number.
 > Type: `array`
 >
 > The found addresses.
+
+
+### .cancelReservation(rno, callback)
+
+Cancel a reservation.
+
+#### rno
+
+> Type: `string`
+>
+> The reservation number to cancel.
+
+#### callback(error, response)
+
+> Type: `function`
+>
+> ##### response
+> Type: `string`
+>
+> Should be the string 'OK'.
 
 
 ## License
