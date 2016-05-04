@@ -19,7 +19,7 @@ var configuration =
 {
     eid: 1,
     sharedSecret: '...',
-	url: 'https://payment.testdrive.klarna.com:443'
+    url: 'https://payment.testdrive.klarna.com:443'
 };
 
 var klarna = new Klarna(configuration);
