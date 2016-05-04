@@ -68,6 +68,26 @@ Gets the addresses for given social security number or organization number.
 > The found addresses.
 
 
+### .cancelReservation(rno, callback)
+
+Cancel a reservation.
+
+#### rno
+
+> Type: `string`
+>
+> The reservation number to cancel.
+
+#### callback(error, response)
+
+> Type: `function`
+>
+> ##### response
+> Type: `string`
+>
+> Should be the string 'OK'.
+
+
 ## License
 
 Apache License © [Anton Johansson](https://github.com/anton-johansson)
